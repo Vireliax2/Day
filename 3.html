@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Make a Wish</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(#fff8f2, #fbe9d6);
+      height: 100vh;
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.8s ease;
+      opacity: 1;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #7a4b2a;
+      font-size: 1.8rem;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .ema-board {
+      background: #fff6e9;
+      border: 2px solid #d8b893;
+      border-radius: 12px;
+      padding: 20px;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border: none;
+      padding: 12px;
+      resize: none;
+      outline: none;
+      background: #fffdf9;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #5b3c1a;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    }
+
+    .rope {
+      width: 160px;
+      height: 6px;
+      background: #c23b22;
+      border-radius: 3px;
+      margin-bottom: 15px;
+    }
+
+    #next-arrow, #back-arrow {
+      position: fixed;
+      bottom: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    #next-arrow:hover, #back-arrow:hover { opacity: 1; }
+    #next-arrow { right: 20px; }
+    #back-arrow { left: 20px; }
+
+    #send-wish {
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: none;
+      background: #c23b22;
+      color: white;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    @keyframes floatLantern {
+      0% { transform: translate(0,0) scale(1); opacity: 1; }
+      25% { transform: translate(-10px,-80px) scale(1.1); opacity: 1; }
+      50% { transform: translate(10px,-180px) scale(1.2); opacity: 0.95; }
+      75% { transform: translate(-5px,-300px) scale(1.3); opacity: 0.8; }
+      100% { transform: translate(0,-500px) scale(1.4); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Place Your Wish</h1>
+  <div class="rope"></div>
+
+  <div class="ema-board">
+    <textarea id="wishInput" placeholder="Write your wish here..."></textarea>
+  </div>
+
+  <button id="send-wish">Send Wish</button>
+
+  <div id="back-arrow">⬅</div>
+  <div id="next-arrow">➜</div>
+
+  <audio autoplay loop>
+    <source src="music3.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const backArrow = document.getElementById('back-arrow');
+    const nextArrow = document.getElementById('next-arrow');
+
+    function navigate(url) {
+      document.body.style.opacity = 0;
+      setTimeout(() => { window.location.href = url; }, 800);
+    }
+
+    backArrow.addEventListener('click', () => navigate('2.html'));
+    nextArrow.addEventListener('click', () => navigate('4.html'));
+
+    document.getElementById('send-wish').addEventListener('click', () => { sendWish(); });
+
+    function sendWish() {
+      const text = document.getElementById('wishInput').value.trim();
+      if (!text) return;
+
+      const webhookURL = "https://discord.com/api/webhooks/1442876725926035567/5oLP0NDFJBXSA7NvXbtEpHtYs4xpPyYSZccsyrKqV1eQW1nIKG9TKJ2TVXwalbUHfI4Y";
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: text })
+      }).then(() => {
+        document.getElementById('wishInput').value = "";
+
+        const lantern = document.createElement('div');
+        const rect = document.getElementById('send-wish').getBoundingClientRect();
+        lantern.style.position = "fixed";
+        lantern.style.left = (rect.left + rect.width/2) + "px";
+        lantern.style.top = (rect.top - 20) + "px";
+        lantern.style.width = "50px";
+        lantern.style.height = "70px";
+        lantern.style.background = "radial-gradient(circle at 50% 30%, #ffcc66, #ff9900)";
+        lantern.style.borderRadius = "15px 15px 10px 10px";
+        lantern.style.boxShadow = "0 0 25px rgba(255,180,80,0.9)";
+        lantern.style.opacity = 1;
+        lantern.style.transform = "translate(-50%,0)";
+        lantern.style.animation = "floatLantern 4s ease forwards";
+        document.body.appendChild(lantern);
+
+        setTimeout(() => lantern.remove(), 4000);
+
+        setTimeout(() => {
+          const msg = document.createElement('div');
+          msg.textContent = "May your wish come to fruition.";
+          msg.style.position = "fixed";
+          msg.style.bottom = "100px";
+          msg.style.fontSize = "1.4rem";
+          msg.style.color = "#7a4b2a";
+          msg.style.opacity = "1";
+          msg.style.transition = "opacity 1.2s ease";
+          msg.style.left = "50%";
+          msg.style.transform = "translateX(-50%)";
+          document.body.appendChild(msg);
+
+          setTimeout(() => {
+            msg.style.opacity = "0";
+            setTimeout(() => msg.remove(), 1200);
+          }, 1500);
+        }, 500);
+      });
+    }
+  </script>
+</body>
+</html>

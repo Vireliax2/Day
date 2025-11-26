@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(#fff7fa, #ffe8ef);
+      height: 100vh;
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      padding-top: 40px;
+    }
+
+    /* Soft glow */
+    .glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,200,220,0.45), rgba(255,200,220,0));
+      top: -150px;
+      filter: blur(40px);
+      z-index: 0;
+    }
+
+    h1, h2, p {
+      z-index: 5;
+      text-align: center;
+      color: #7a4b5a;
+    }
+
+    .gift-text {
+      font-size: 1.4rem;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      white-space: pre-line;
+      text-align: center;
+      color: #7a4b5a;
+    }
+
+    .image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 4rem;
+      padding-bottom: 2rem;
+    }
+
+    .image-container img {
+      max-width: 90%;
+      width: 350px;
+      border-radius: 1rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      opacity: 0.8;
+      transition: opacity 0.5s ease;
+    }
+
+    .image-container img:hover {
+      opacity: 1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .write-box {
+      background: #fffdfb;
+      border: 2px solid #e3c8d0;
+      border-radius: 12px;
+      padding: 15px;
+      width: 85%;
+      max-width: 420px;
+      min-height: 80px;
+      margin-top: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 5;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    /* Decorative petals */
+    .petal {
+      position: absolute;
+      top: -10vh;
+      width: 18px;
+      height: 18px;
+      background: pink;
+      opacity: 0.55;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: fall 7s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    /* Back arrow */
+    #back-arrow {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 2rem;
+      opacity: 0.8;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.3s ease;
+      z-index: 20;
+    }
+
+    #back-arrow:hover {
+      opacity: 1;
+    }
+
+    /* Next arrow */
+    #next-arrow {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2rem;
+      opacity: 0.8;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.3s ease;
+      z-index: 20;
+    }
+
+    #next-arrow:hover {
+      opacity: 1;
+    }
+
+    /* Bottom section */
+    .bottom-section {
+      margin-top: auto;
+      margin-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+    }
+
+    /* MOBILE FIXES */
+    @media (max-width: 480px) {
+      body {
+        padding-top: 20px;
+      }
+
+      .write-box {
+        width: 90%;
+        padding: 12px;
+        font-size: 0.95rem;
+      }
+
+      .gift-text {
+        font-size: 1.1rem;
+      }
+
+      .image-container img {
+        width: 95%;
+      }
+
+      #back-arrow, #next-arrow {
+        font-size: 1.8rem;
+        bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow"></div>
+
+  <script>
+    // Petals
+    for (let i = 0; i < 20; i++) {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDelay = Math.random() * 6 + 's';
+      document.body.appendChild(petal);
+    }
+  </script>
+
+  <!-- User-writing spaces at the top -->
+  <div class="write-box">Hello there !<br><b>Happy birthday to ya again !</b></div>
+  <div class="write-box">I can't physcially come there to give you one, <br>So...<br> Well, this was my birthday card for you. </div>
+  <div class="write-box">I know there is not much to this card.<br> The second page was at most worth 30 seconds.<br>Sorry about that.</div>
+  <div class="write-box">I wanted to give you a card but well...<br> I am not smart enough to know what to write. <br> I just wanted to give.</div>
+
+  <!-- Bottom section -->
+  <div class="bottom-section">
+    <div class="gift-text">For making it to the end—
+Here, a little gift for ya ! ^^</div>
+
+    <div style="font-size: 2rem;">🍫</div>
+
+    <div class="image-container">
+      <img src="Last_Image.jpg" alt="An image I like. But it didn't appear. Sad. ">
+    </div>
+  </div>
+
+  <!-- Back -->
+  <div id="back-arrow">⬅</div>
+
+  <!-- Next -->
+  <div id="next-arrow">➡</div>
+
+  <script>
+    const backArrow = document.getElementById('back-arrow');
+    backArrow.addEventListener('click', () => {
+      window.location.href = '3.html';
+    });
+
+    const nextArrow = document.getElementById('next-arrow');
+    nextArrow.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  </script>
+
+</body>
+</html>
